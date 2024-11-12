@@ -76,6 +76,8 @@ export const siderMenus: { [key: string]: SiderMenuProps[] } = {
   home: [
     {
       hidden: true,
+      key: "/home",
+      label: "首页",
     },
   ],
 };
