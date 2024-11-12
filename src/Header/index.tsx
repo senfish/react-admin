@@ -1,11 +1,11 @@
 import { Menu } from "antd";
 import { OpenAIOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { headerMenus } from "../Menu";
 import "./index.less";
-const getCurrentKey = () => {
-  const path = window.location.pathname.split("/")[1];
+const getCurrentKey = (location) => {
+  const path = location.pathname.split("/")[1];
   return path;
 };
 const Header = ({
@@ -14,7 +14,8 @@ const Header = ({
   setCurrentModule: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const navigate = useNavigate();
-  const currentKey = getCurrentKey();
+  const location = useLocation();
+  const currentKey = getCurrentKey(location);
   const onClick: MenuProps["onClick"] = (e) => {
     setCurrentModule(e.key);
     if (e.key === "class") {

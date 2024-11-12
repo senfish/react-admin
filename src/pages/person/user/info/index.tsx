@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import "./index.less";
@@ -14,12 +13,13 @@ const Explore = () => {
 };
 const Info = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeKey, setActiveKey] = useState("record");
   const findKeyByPathname = (pathname: string) => {
     return tabs.find((item) => item.path === pathname)?.key || "ruleExplore";
   };
   useEffect(() => {
-    const key = findKeyByPathname(window.location.pathname);
+    const key = findKeyByPathname(location.pathname);
     setActiveKey(key);
   }, []);
   const tabs = [

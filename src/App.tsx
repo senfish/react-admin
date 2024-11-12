@@ -12,7 +12,8 @@ const MathLazy = lazy(() => import("./pages/class/math"));
 
 const App = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="react-layout">
+      {/* <BrowserRouter> */}
       <Layout>
         <Suspense fallback={<div>Loading...</div>}>
           <Routes>

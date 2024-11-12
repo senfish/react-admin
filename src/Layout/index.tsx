@@ -1,5 +1,5 @@
 import { Layout, Menu } from "antd";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { get } from "lodash";
 import { siderMenus } from "../Menu";
@@ -8,15 +8,17 @@ import "./index.less";
 
 const LayoutWrapper = (props) => {
   const navigate = useNavigate();
-  const [currentModule, setCurrentModule] = useState("person");
+  const [currentModule, setCurrentModule] = useState<string>();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const location = useLocation();
 
   useEffect(() => {
-    if (window.location.pathname === "/") {
+    if (location.pathname === "/") {
       navigate("/home");
+      setCurrentModule("home");
       return;
     }
-    const paths = window.location.pathname.split("/");
+    const paths = location.pathname.split("/");
     if (paths[1]) {
       setCurrentModule(paths[1]);
     }
@@ -24,7 +26,6 @@ const LayoutWrapper = (props) => {
   const getSelectKey = (pathname, menusMap) => {
     let tag = false;
     let targetMenu = null;
-    // let parentMenu = null;
     const findMenuItem = (menus) => {
       for (let i = 0; i < menus.length; i++) {
         const tempMenu = menus[i];
@@ -44,16 +45,16 @@ const LayoutWrapper = (props) => {
     return targetMenu;
   };
   useEffect(() => {
-    const targtMenu = getSelectKey(window.location.pathname, siderMenus);
+    const targtMenu = getSelectKey(location.pathname, siderMenus);
     setSelectedKeys([targtMenu?.key]);
-  }, [window.location.pathname]);
+  }, [location.pathname]);
   const onSelect = (target) => {
     const path = get(target, "item.props.path", "");
     navigate(path);
   };
   const currentMenus = siderMenus[currentModule];
   const hiddenMenu = useMemo(() => {
-    return currentMenus.some((item) => item.hidden);
+    return currentMenus?.some((item) => item.hidden);
   }, [currentMenus]);
 
   return (
