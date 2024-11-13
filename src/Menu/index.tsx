@@ -1,5 +1,11 @@
 import type { MenuProps } from "antd";
-
+import {
+  MailOutlined,
+  SnippetsOutlined,
+  FacebookOutlined,
+  PieChartOutlined,
+  SettingOutlined,
+} from "@ant-design/icons";
 type MenuItem = Required<MenuProps>["items"][number];
 
 export const headerMenus: MenuItem[] = [
@@ -28,6 +34,7 @@ export const siderMenus: { [key: string]: SiderMenuProps[] } = {
     {
       key: "/person",
       label: "用户",
+      icon: <MailOutlined />,
       children: [
         {
           key: "/person/user/info/record",
@@ -49,6 +56,7 @@ export const siderMenus: { [key: string]: SiderMenuProps[] } = {
     {
       key: "/person/config",
       label: "配置",
+      icon: <SettingOutlined />,
       path: "/person/config",
       includesUrl: ["/person/config"],
     },
@@ -56,6 +64,7 @@ export const siderMenus: { [key: string]: SiderMenuProps[] } = {
   class: [
     {
       key: "/class/math",
+      icon: <PieChartOutlined />,
       label: "数学",
       path: "/class/math",
       includesUrl: ["/class/math"],
@@ -63,12 +72,14 @@ export const siderMenus: { [key: string]: SiderMenuProps[] } = {
     {
       key: "/class/chinese",
       label: "语文",
+      icon: <SnippetsOutlined />,
       path: "/class/chinese",
       includesUrl: ["/class/chinese"],
     },
     {
       key: "/class/english",
       label: "英语",
+      icon: <FacebookOutlined />,
       path: "/class/english",
       includesUrl: ["/class/english"],
     },

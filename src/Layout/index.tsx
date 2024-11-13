@@ -6,6 +6,7 @@ import { siderMenus } from "../Menu";
 import Header from "../Header";
 import "./index.less";
 
+const isLogin = false; // 可以是用户信息的对象
 const LayoutWrapper = (props) => {
   const navigate = useNavigate();
   const [currentModule, setCurrentModule] = useState<string>();
@@ -56,6 +57,7 @@ const LayoutWrapper = (props) => {
   const hiddenMenu = useMemo(() => {
     return currentMenus?.some((item) => item.hidden);
   }, [currentMenus]);
+  console.log("selectedKeys: ", selectedKeys);
 
   return (
     <Layout style={{ background: "#fff" }}>

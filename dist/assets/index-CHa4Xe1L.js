@@ -1,0 +1,1 @@
+import{j as r}from"./index-BioSbXLa.js";import{C as i}from"./index-BoTnXExZ.js";const e=()=>r.jsxs(i,{children:[r.jsx("div",{children:"react 练习项目"}),r.jsxs("ul",{children:[r.jsx("li",{children:"文件树查询"}),r.jsx("li",{children:"tab级别路由"}),r.jsx("li",{children:"Ellipsis组件封装"}),r.jsx("li",{children:"流程图低代码"}),r.jsx("li",{children:"中台table解决方案"})]})]});export{e as default};

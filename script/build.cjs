@@ -4,8 +4,6 @@ const path = require("path");
 const process = require("process");
 const sourcePath = path.resolve(process.cwd(), "dist/index.html");
 const targetPath = path.resolve(process.cwd(), "dist/404.html");
-console.log("sourcePath: ", sourcePath);
-
 async function copyFile() {
   try {
     await fs.copyFileSync(sourcePath, targetPath);
