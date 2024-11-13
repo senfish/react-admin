@@ -52,7 +52,10 @@ const Info = () => {
   };
   return (
     <div className="user-info-page">
-      <div className="user-info-title">信息标题</div>
+      <div className="user-info-header">
+        <div className="title">信息标题</div>
+        <span className="tips">tab级别路由示例</span>
+      </div>
       <Tabs
         className="user-info-tab"
         activeKey={activeKey}

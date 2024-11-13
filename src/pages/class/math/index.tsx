@@ -1,4 +1,6 @@
+import CardWrapper from "../../../common/cardWrapper";
+
 const Math = () => {
-  return <>Math</>;
+  return <CardWrapper>Math</CardWrapper>;
 };
 export default Math;

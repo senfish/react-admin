@@ -1,5 +1,7 @@
+import CardWrapper from "../../../../common/cardWrapper";
+
 const Hobby = () => {
-  return <>hobby page</>;
+  return <CardWrapper>hobby page</CardWrapper>;
 };
 
 export default Hobby;
