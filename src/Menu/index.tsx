@@ -51,6 +51,12 @@ export const siderMenus: { [key: string]: SiderMenuProps[] } = {
           path: "/person/user/hobby",
           includesUrl: ["/person/user/hobby"],
         },
+        {
+          key: "/person/user/members",
+          label: "成员管理",
+          path: "/person/user/members",
+          includesUrl: ["/person/user/members"],
+        },
       ],
     },
     {

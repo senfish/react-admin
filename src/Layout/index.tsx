@@ -1,4 +1,5 @@
-import { Layout, Menu } from "antd";
+import { ConfigProvider, Layout, Menu } from "antd";
+import zhCN from "antd/locale/zh_CN";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
 import { get } from "lodash";
@@ -23,7 +24,13 @@ const LayoutWrapper = (props) => {
     if (paths[1]) {
       setCurrentModule(paths[1]);
     }
-  }, []);
+    const targtMenu = getSelectKey(location.pathname, siderMenus);
+    if (!targtMenu) {
+      navigate("/home");
+    } else {
+      setSelectedKeys([targtMenu?.key]);
+    }
+  }, [location.pathname]);
   const getSelectKey = (pathname, menusMap) => {
     let tag = false;
     let targetMenu = null;
@@ -45,10 +52,7 @@ const LayoutWrapper = (props) => {
     Object.keys(menusMap).forEach((key) => findMenuItem(menusMap[key]));
     return targetMenu;
   };
-  useEffect(() => {
-    const targtMenu = getSelectKey(location.pathname, siderMenus);
-    setSelectedKeys([targtMenu?.key]);
-  }, [location.pathname]);
+
   const onSelect = (target) => {
     const path = get(target, "item.props.path", "");
     navigate(path);
@@ -57,7 +61,6 @@ const LayoutWrapper = (props) => {
   const hiddenMenu = useMemo(() => {
     return currentMenus?.some((item) => item.hidden);
   }, [currentMenus]);
-  console.log("selectedKeys: ", selectedKeys);
 
   return (
     <Layout style={{ background: "#fff" }}>
@@ -81,7 +84,9 @@ const LayoutWrapper = (props) => {
             defaultOpenKeys={["/person"]}
           />
         )}
-        <div style={{ width: "100%" }}>{props.children}</div>
+        <div style={{ width: "100%" }}>
+          <ConfigProvider locale={zhCN}>{props.children}</ConfigProvider>
+        </div>
       </Layout>
     </Layout>
   );
