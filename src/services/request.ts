@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { token } from "./token";
 
 const instance = axios.create({
@@ -16,6 +16,7 @@ instance.interceptors.response.use((response) => {
   }
   return response;
 });
+
 export const request = async ({
   method = "GET",
   url,

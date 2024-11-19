@@ -32,10 +32,10 @@ const Members = () => {
     options = { pageNum: defaultPageNum, pageSize: defaultPageSize }
   ) => {
     const { pageNum, pageSize } = options;
-    const res = await getUserListDispatch({
+    const res = (await getUserListDispatch({
       pageNum,
       pageSize,
-    });
+    })) as unknown as UserListTableData;
     setTableData(res);
     setPageNum(res.pageNum);
     setPageSize(res.pageSize);
