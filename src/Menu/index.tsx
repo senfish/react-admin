@@ -46,10 +46,10 @@ export const siderMenus: { [key: string]: SiderMenuProps[] } = {
           ],
         },
         {
-          key: "/person/user/hobby",
-          label: "习惯",
-          path: "/person/user/hobby",
-          includesUrl: ["/person/user/hobby"],
+          key: "/person/user/article",
+          label: "技术文章",
+          path: "/person/user/article",
+          includesUrl: ["/person/user/article"],
         },
         {
           key: "/person/user/members",

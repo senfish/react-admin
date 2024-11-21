@@ -1,9 +1,15 @@
-import { Menu } from "antd";
-import { OpenAIOutlined } from "@ant-design/icons";
+import { Dropdown, Menu } from "antd";
+import {
+  OpenAIOutlined,
+  SettingOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import { headerMenus } from "../Menu";
 import "./index.less";
+import { useMemo } from "react";
+
 const getCurrentKey = (location) => {
   const path = location.pathname.split("/")[1];
   return path;
@@ -28,6 +34,26 @@ const Header = ({
       navigate(`/${e.key}`);
     }
   };
+  const getUserName = useMemo(() => {
+    const userInfo = localStorage.getItem("userInfo");
+    try {
+      return JSON.parse(userInfo)?.username;
+    } catch {
+      return "";
+    }
+  }, [localStorage.getItem("userInfo")]);
+
+  const items: MenuProps["items"] = [
+    {
+      key: "1",
+      label: "退出登录",
+      onClick: () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userInfo");
+        navigate("/login");
+      },
+    },
+  ];
   return (
     <div className="layout-header">
       <div className="icon-content">
@@ -35,11 +61,20 @@ const Header = ({
         <span className="title">AI Center</span>
       </div>
       <Menu
+        style={{ flex: 1 }}
         onClick={onClick}
         selectedKeys={[currentKey]}
         mode="horizontal"
         items={headerMenus}
       />
+      <Dropdown menu={{ items }}>
+        <div className="user">
+          <span style={{ marginRight: 4 }}>{getUserName}</span>
+          <div className="avatar">
+            <UserOutlined className="user-icon" />
+          </div>
+        </div>
+      </Dropdown>
     </div>
   );
 };

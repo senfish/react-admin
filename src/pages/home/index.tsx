@@ -1,16 +1,12 @@
-import CardWrapper from "../../common/cardWrapper";
+import CardWrapper from "../../common/CardWrapper";
 
 const Home = () => {
   return (
     <CardWrapper>
-      <div>react 练习项目</div>
-      <ul>
-        <li>文件树查询</li>
-        <li>tab级别路由</li>
-        <li>Ellipsis组件封装</li>
-        <li>流程图低代码</li>
-        <li>中台table解决方案</li>
-      </ul>
+      <h3>1. 接入 pv、 uv数据 </h3>
+      <h3>2. header 个人部分 </h3>
+      <h3>3. 拖拉拽 </h3>
+      <h3>4. code: 200的接口，只是数据错误，不是接口错误 </h3>
     </CardWrapper>
   );
 };

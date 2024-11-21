@@ -1,5 +1,5 @@
 import { Modal, Form, Input, Select } from "antd";
-import { UserDialogProps } from "../../../../../common/useDialog";
+import { UserDialogProps } from "../../../../../hooks/useDialog";
 import { createUserDispatch, updateUserDispatch } from "../service";
 import { useEffect } from "react";
 

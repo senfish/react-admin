@@ -1,4 +1,4 @@
-import CardWrapper from "../../../common/cardWrapper";
+import CardWrapper from "../../../common/CardWrapper";
 
 const Config = () => {
   return <CardWrapper>config</CardWrapper>;

@@ -1,19 +1,19 @@
 import { useState } from "react";
-import CardWrapper from "../../../common/cardWrapper";
+import CardWrapper from "../../../common/CardWrapper";
 import { Button } from "antd";
 
 const Wrapper = () => {
   const [count, setCount] = useState(0);
   const [mode, setMode] = useState(0);
   // console.log("mode: ", mode);
-  const handClick = () => {
+  const handClick = (e) => {
+    e.stopPropagation();
     setCount(count + 1);
     setCount(count + 1);
     setCount(count + 1);
     setMode(mode + 1);
     setMode(mode + 1);
     setMode(mode + 1);
-
     console.log(mode, "click  ====> handle", count);
   };
   console.log(mode, "click ===> render", count);

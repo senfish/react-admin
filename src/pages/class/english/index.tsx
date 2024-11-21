@@ -1,4 +1,4 @@
-import CardWrapper from "../../../common/cardWrapper";
+import CardWrapper from "../../../common/CardWrapper";
 
 const English = () => {
   return <CardWrapper>English</CardWrapper>;

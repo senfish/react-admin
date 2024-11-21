@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import { token } from "./token";
+import { message } from "antd";
 
 const instance = axios.create({
-  baseURL: "http://100.81.79.184:3000",
+  baseURL: "http://localhost:3000",
 });
 interface RequestOptions {
   method: "POST" | "GET" | "DELETE";
@@ -10,26 +11,40 @@ interface RequestOptions {
   params?: Record<string, unknown>;
   data?: Record<string, unknown>;
 }
-instance.interceptors.response.use((response) => {
-  if (response.status === 200) {
-    return response.data.data;
+instance.interceptors.response.use(
+  (response) => {
+    if (response.status === 200) {
+      return response.data.data;
+    }
+    return response;
+  },
+  (err) => {
+    console.log("instace err: ", err);
+    if (err.status === 401) {
+      // TODO
+      window.location.href = "/react-layout/login";
+    }
+    if (err.status === 400) {
+      message.error(err.response?.data?.message || err?.message);
+      return Promise.reject(message); // 一定要抛出reject，不然request会认为你的请求是成功的
+    }
   }
-  return response;
-});
+);
 
-export const request = async ({
+export const request = async <T>({
   method = "GET",
   url,
   params = {},
   data = {},
-}: RequestOptions) => {
+}: RequestOptions): Promise<T> => {
+  const token = localStorage.getItem("token");
   return await instance({
     method,
     url,
     params,
     data,
     headers: {
-      Authorization: `Bearz ` + token,
+      Authorization: token,
     },
   });
 };

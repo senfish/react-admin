@@ -1,26 +1,39 @@
-import { ConfigProvider, Layout, Menu } from "antd";
+import { ConfigProvider, Layout, Menu, Spin } from "antd";
 import zhCN from "antd/locale/zh_CN";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { get } from "lodash";
 import { siderMenus } from "../Menu";
 import Header from "../Header";
 import "./index.less";
+import useRequest from "../hooks/useRequest";
+import { getUserInfoDispatch } from "./services";
 
-const isLogin = false; // 可以是用户信息的对象
 const LayoutWrapper = (props) => {
   const navigate = useNavigate();
   const [currentModule, setCurrentModule] = useState<string>();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const { run: getUserInfo } = useRequest(
+    {
+      request: getUserInfoDispatch,
+    },
+    {
+      onSucess: (res) => {
+        // 需要存储到全局store里面 TODO
+        localStorage.setItem("userInfo", JSON.stringify(res));
+      },
+    }
+  );
   const location = useLocation();
-
   useEffect(() => {
+    if (location.pathname === "/login") return;
     if (location.pathname === "/") {
       navigate("/home");
       setCurrentModule("home");
       return;
     }
     const paths = location.pathname.split("/");
+    // /class/math =>  ['', 'class', 'math']
     if (paths[1]) {
       setCurrentModule(paths[1]);
     }
@@ -30,6 +43,7 @@ const LayoutWrapper = (props) => {
     } else {
       setSelectedKeys([targtMenu?.key]);
     }
+    getUserInfo();
   }, [location.pathname]);
   const getSelectKey = (pathname, menusMap) => {
     let tag = false;
@@ -61,34 +75,71 @@ const LayoutWrapper = (props) => {
   const hiddenMenu = useMemo(() => {
     return currentMenus?.some((item) => item.hidden);
   }, [currentMenus]);
-
   return (
-    <Layout style={{ background: "#fff" }}>
-      <Header setCurrentModule={setCurrentModule} />
-      <Layout
-        style={{
-          flexDirection: "row",
-          paddingTop: 48,
-          height: "100%",
-          minHeight: "calc(100vh - 1px)",
-          background: "#fff",
-        }}
-      >
-        {!hiddenMenu && (
-          <Menu
-            mode="inline"
-            style={{ width: 200 }}
-            items={currentMenus}
-            selectedKeys={selectedKeys}
-            onSelect={onSelect}
-            defaultOpenKeys={["/person"]}
-          />
-        )}
-        <div style={{ width: "100%" }}>
-          <ConfigProvider locale={zhCN}>{props.children}</ConfigProvider>
-        </div>
-      </Layout>
-    </Layout>
+    <>
+      {location.pathname === "/login" ? (
+        <Suspense
+          fallback={
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Spin />
+            </div>
+          }
+        >
+          <Outlet />
+        </Suspense>
+      ) : (
+        <Layout style={{ background: "#fff" }} className="sens-project-layout">
+          <Header setCurrentModule={setCurrentModule} />
+          <Layout
+            style={{
+              flexDirection: "row",
+              paddingTop: 48,
+              minHeight: "calc(100vh - 1px)",
+              height: "calc(100vh - 48px)",
+              background: "#fff",
+            }}
+            className="layout-wrapper"
+          >
+            {!hiddenMenu && (
+              <Menu
+                mode="inline"
+                className="sider-menu-ajydgfajydsfgaydsf"
+                style={{ width: 200, flexShrink: 0 }}
+                items={currentMenus}
+                selectedKeys={selectedKeys}
+                onSelect={onSelect}
+                defaultOpenKeys={["/person"]}
+              />
+            )}
+            <div style={{ width: "100%", overflowY: "auto" }}>
+              <ConfigProvider locale={zhCN}>
+                <Suspense
+                  fallback={
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Spin />
+                    </div>
+                  }
+                >
+                  <Outlet />
+                </Suspense>
+              </ConfigProvider>
+            </div>
+          </Layout>
+        </Layout>
+      )}
+    </>
   );
 };
 

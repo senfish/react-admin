@@ -1,0 +1,1 @@
+import{F as r,r as n,j as t}from"./index-CqvVO2hZ.js";const i=e=>{const{hasAuth:s}=e,a=r();return n.useEffect(()=>{s||a("/login",{replace:!0})},[]),t.jsx(t.Fragment,{children:"login"})};export{i as default};

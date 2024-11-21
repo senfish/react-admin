@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Button, Divider, Modal, Table, Tag } from "antd";
-import { useDialog } from "../../../../common/useDialog";
+import { useDialog } from "../../../../hooks/useDialog";
 import CreateUserDialog from "./CreateUser";
 import "./index.less";
 import { PlusOutlined } from "@ant-design/icons";
 import { deleteUserDispatch, getUserListDispatch } from "./service";
+import ContainerHeader from "../../../../common/Title";
 const map = {
   1: "超级管理员",
   2: "管理员",
@@ -99,9 +100,7 @@ const Members = () => {
   };
   return (
     <div className="member-page">
-      <div className="member-info-header">
-        <div className="title">成员管理</div>
-      </div>
+      <ContainerHeader title="成员管理" />
       <div className="content">
         <div className="filter">
           <Button type="primary" onClick={createUser}>

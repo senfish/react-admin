@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import "./index.less";
+import ContainerHeader from "../../../../common/Title";
 const { TabPane } = Tabs;
 
 const Record = () => {
@@ -52,10 +53,11 @@ const Info = () => {
   };
   return (
     <div className="user-info-page">
-      <div className="user-info-header">
-        <div className="title">信息标题</div>
-        <span className="tips">tab级别路由示例</span>
-      </div>
+      <ContainerHeader
+        title="成员管理"
+        desc="tab级别路由示例"
+        style={{ borderBottom: "none" }}
+      />
       <Tabs
         className="user-info-tab"
         activeKey={activeKey}
