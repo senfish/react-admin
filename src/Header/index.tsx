@@ -67,7 +67,7 @@ const Header = ({
         mode="horizontal"
         items={headerMenus}
       />
-      <Dropdown menu={{ items }}>
+      <Dropdown menu={{ items }} overlayStyle={{ width: 200 }}>
         <div className="user">
           <span style={{ marginRight: 4 }}>{getUserName}</span>
           <div className="avatar">

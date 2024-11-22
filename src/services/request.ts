@@ -14,15 +14,18 @@ interface RequestOptions {
 instance.interceptors.response.use(
   (response) => {
     if (response.status === 200) {
+      if (response.data?.code?.startsWith("100")) {
+        message.error(response.data?.message);
+        return Promise.reject(response.data);
+      }
       return response.data.data;
     }
     return response;
   },
   (err) => {
-    console.log("instace err: ", err);
     if (err.status === 401) {
       // TODO
-      window.location.href = "/react-layout/login";
+      window.location.href = "/login";
     }
     if (err.status === 400) {
       message.error(err.response?.data?.message || err?.message);

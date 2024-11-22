@@ -15,7 +15,7 @@ const LoginLazy = lazy(() => import("./pages/login"));
 
 const App = () => {
   return (
-    <BrowserRouter basename="react-layout">
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/login" element={<LoginLazy />} />
