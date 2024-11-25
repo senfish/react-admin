@@ -1,5 +1,6 @@
 import { Dropdown, Menu } from "antd";
 import {
+  GithubOutlined,
   OpenAIOutlined,
   SettingOutlined,
   UserOutlined,
@@ -67,6 +68,9 @@ const Header = ({
         mode="horizontal"
         items={headerMenus}
       />
+      <a className="github" href="https://github.com/senfish/react-admin">
+        <GithubOutlined className="icon" />
+      </a>
       <Dropdown menu={{ items }} overlayStyle={{ width: 200 }}>
         <div className="user">
           <span style={{ marginRight: 4 }}>{getUserName}</span>

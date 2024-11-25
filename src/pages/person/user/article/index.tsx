@@ -111,34 +111,3 @@ const Hobby = () => {
 };
 
 export default Hobby;
-
-interface ArticleItem {
-  title: string;
-  brief_content: string;
-  comment_count: number;
-  view_count: number;
-  digg_count: number;
-  article_id: string;
-  collect_count: number;
-}
-
-interface ArticleResponse {
-  data: ArticleItem[];
-  total: number;
-  pageNo: number;
-  pageSize: number;
-}
-
-interface Emtpy {
-  data: unknown[];
-  total: number;
-  pageNo: number;
-  pageSize: number;
-}
-const test = <T extends Emtpy>(): T["data"] => {
-  let data;
-  return data;
-};
-const info = test<ArticleResponse>();
-
-// 想让test函数的返回值是 ArticleResponse 的 data 属性，不是ArticleResponse

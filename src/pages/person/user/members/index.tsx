@@ -57,7 +57,7 @@ const Members = () => {
   const columns = [
     {
       dataIndex: "id",
-      title: "id",
+      title: "ID",
       width: 120,
     },
     {
@@ -75,9 +75,12 @@ const Members = () => {
       dataIndex: "action",
       title: "操作",
       render: (text, record) => {
+        // const is_permission
         return (
           <>
-            <a
+            <Button
+              type="link"
+              disabled={true}
               onClick={() => {
                 open({
                   mode: "edit",
@@ -87,7 +90,7 @@ const Members = () => {
               }}
             >
               编辑
-            </a>
+            </Button>
             <Divider type="vertical" />
             <a onClick={() => deleteUser(record.id, record.username)}>删除</a>
           </>
@@ -110,9 +113,10 @@ const Members = () => {
         </div>
         <Table
           columns={columns}
-          dataSource={tableData.data}
+          size={"small"}
+          dataSource={tableData?.data}
           pagination={{
-            total: tableData.total,
+            total: tableData?.total,
             pageSize: pageSize,
             current: pageNum,
             onChange(page, pageSize) {

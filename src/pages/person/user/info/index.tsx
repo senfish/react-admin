@@ -4,14 +4,10 @@ import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import "./index.less";
 import ContainerHeader from "../../../../common/Title";
+import RecordTabPane from "./RecordTabPane";
+import ExploreTabPane from "./ExploreTabPane";
 const { TabPane } = Tabs;
 
-const Record = () => {
-  return <>运行记录page</>;
-};
-const Explore = () => {
-  return <>探查视角page</>;
-};
 const Info = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -26,7 +22,7 @@ const Info = () => {
   const tabs = [
     {
       key: "record",
-      label: "运行记录",
+      label: "操作记录",
       path: "/person/user/info/record",
     },
     {
@@ -44,9 +40,9 @@ const Info = () => {
   const renderTabs = () => {
     switch (activeKey) {
       case "record":
-        return <Record />;
+        return <RecordTabPane />;
       case "explore":
-        return <Explore />;
+        return <ExploreTabPane />;
       default:
         return null;
     }

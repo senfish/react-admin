@@ -1,5 +1,4 @@
 import axios, { AxiosResponse } from "axios";
-import { token } from "./token";
 import { message } from "antd";
 
 const instance = axios.create({

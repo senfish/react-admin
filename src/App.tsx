@@ -2,7 +2,9 @@ import { lazy, Suspense, useEffect } from "react";
 import { Spin } from "antd";
 import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import Layout from "./Layout";
-
+import dayjs from "dayjs";
+import "dayjs/locale/zh-cn";
+dayjs.locale("zh-cn");
 const HomeLazy = lazy(() => import("./pages/home"));
 const ConfigLazy = lazy(() => import("./pages/person/config"));
 const InfoLazy = lazy(() => import("./pages/person/user/info"));
