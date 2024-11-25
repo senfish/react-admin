@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import CardWrapper from "../../../common/CardWrapper";
+import CardWrapper from "../../../components/CardWrapper";
 
 const Chinese = () => {
   useEffect(() => {}, []);

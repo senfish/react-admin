@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CardWrapper from "../../../common/CardWrapper";
+import CardWrapper from "../../../components/CardWrapper";
 import { Button } from "antd";
 
 const Wrapper = () => {
