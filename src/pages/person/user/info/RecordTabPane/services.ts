@@ -10,12 +10,12 @@ export interface MonitorListData {
   data: MonitorListItem[];
   total: number;
   pageSize: number;
-  pageNo: number;
+  pageNum: number;
 }
-export const getMonitorListDispatch = async <T>() => {
+export const getMonitorListDispatch = async <T>(data = {}) => {
   return await request<T>({
     method: "POST",
-    data: {},
+    data: data,
     url: "/monitor/monitor_list",
   });
 };

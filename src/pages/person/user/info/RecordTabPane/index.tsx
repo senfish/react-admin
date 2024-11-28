@@ -6,6 +6,10 @@ import {
   MonitorListData,
   MonitorListItem,
 } from "./services";
+import { useEffect, useState } from "react";
+import { getUserListDispatch } from "../../members/service";
+import { UserListTableData } from "../../members";
+import dayjs from "dayjs";
 const { RangePicker } = DatePicker;
 
 const typeMap = {
@@ -16,20 +20,46 @@ const typeMap = {
 };
 
 const RecordTabPane = () => {
-  const { data } = useRequest<MonitorListData>({
+  const [pageNum, setPageNo] = useState(1);
+  const [time, setTime] = useState<string[]>();
+  const [type, setType] = useState();
+  const [user, setUser] = useState();
+  const { data, run } = useRequest<MonitorListData>({
     request: getMonitorListDispatch,
-    initParams: {},
   });
-  console.log("data: ", data);
-
+  const { data: userList } = useRequest<UserListTableData>({
+    request: getUserListDispatch,
+    initParams: {
+      pageSize: 1000,
+    },
+  });
+  useEffect(() => {
+    run({
+      pageNum,
+      type,
+      time,
+      user,
+    });
+  }, [pageNum, time, type, user]);
+  const onChange = (dates, dateStrings) => {
+    if (!dates) {
+      return setTime(undefined);
+    }
+    setTime(dateStrings);
+  };
+  const disabledDate = (current) => {
+    return current && current > dayjs();
+  };
   const columns = [
     {
       title: "ID",
       dataIndex: "id",
+      width: 120,
     },
     {
       title: "用户",
       dataIndex: "user",
+      width: 120,
     },
     {
       title: "类型",
@@ -49,46 +79,72 @@ const RecordTabPane = () => {
   ];
   const items = [
     {
-      label: "查看范围",
+      label: "操作用户",
       field: "user",
-      component: <Input placeholder="请输入用户名" />,
+      component: (
+        <Select
+          placeholder="请输入用户名"
+          allowClear
+          onChange={(value) => {
+            setUser(value);
+          }}
+          options={(userList?.data || []).map((item) => {
+            return {
+              label: item.username,
+              value: item.username,
+            };
+          })}
+        />
+      ),
     },
     {
-      label: "查看范围",
-      field: "user",
-      component: <Select placeholder="请输入用户名" />,
+      label: "操作类型",
+      field: "type",
+      component: (
+        <Select
+          placeholder="请输入用户名"
+          allowClear
+          options={Object.keys(typeMap).map((key) => {
+            return {
+              label: typeMap[key],
+              value: key,
+            };
+          })}
+          onChange={(value) => {
+            setType(value);
+          }}
+        />
+      ),
     },
     {
       label: "操作日期",
       field: "user",
-      component: <RangePicker />,
-    },
-    {
-      label: "查看范围",
-      field: "user",
-      component: <Input placeholder="请输入用户名" />,
-    },
-    {
-      label: "创建时间",
-      field: "user",
-      component: <RangePicker />,
-    },
-    {
-      label: "更新时间",
-      field: "user",
-      component: <RangePicker />,
+      component: (
+        <RangePicker onChange={onChange} disabledDate={disabledDate} />
+      ),
     },
   ];
   return (
     <div>
-      <li> 是一个表格，记录着所有的人员的操作日志信息；</li>
-      <li> 操作类型：登录、新增、修改、删除 ； 操作时间； 操作人；</li>
-      <li> 查询： 支持用户名查询， 支持时间范围查询； 支持操作类型查询；</li>
-      <br></br>
       <div>
         <Filter items={items} defaultCollapsed />
       </div>
-      <Table size={"small"} columns={columns} dataSource={data?.data} />
+      <Table
+        size={"small"}
+        columns={columns}
+        dataSource={data?.data}
+        pagination={{
+          total: data?.total,
+          pageSize: data?.pageSize,
+          current: data?.pageNum,
+          hideOnSinglePage: true,
+          showTotal: (total) => `共 ${total} 条`,
+          onChange(page, pageSize) {
+            console.log(page, pageSize);
+            setPageNo(page);
+          },
+        }}
+      />
     </div>
   );
 };

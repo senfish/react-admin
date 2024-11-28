@@ -15,8 +15,9 @@ export const createUserDispatch = async (data) => {
     url: "/user/register",
   });
 };
-export const getUserListDispatch = async (data) => {
-  return await request({
+
+export const getUserListDispatch = async <T>(data) => {
+  return await request<T>({
     method: "POST",
     data,
     url: "/user/list",

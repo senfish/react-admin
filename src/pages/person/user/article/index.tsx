@@ -34,18 +34,12 @@ export interface ArticleItem {
   collect_count: number;
 }
 
-interface ArticleResponse {
-  data: ArticleItem[];
-  total: number;
-  pageNo: number;
-  pageSize: number;
-}
-
 const Hobby = () => {
   const [currentTag, setCurrentTag] = useState("1");
-  const { data, run } = useRequest<ArticleResponse>({
+  const { data, run, loading } = useRequest<ArticleItem[]>({
     request: getArticleDispatch,
   });
+  console.log("data: ", data);
 
   useEffect(() => {
     run({ currentTag });
@@ -54,7 +48,7 @@ const Hobby = () => {
     window.open(`https://juejin.cn/post/${item.article_id}`);
   };
   const renderArticleCard = () => {
-    return data?.data?.map((item) => {
+    return data?.map((item) => {
       return (
         <div
           // key={item.article_id}
@@ -92,20 +86,22 @@ const Hobby = () => {
   return (
     <div className="article-page">
       <ContainerHeader title="技术文章" />
-      <div className="tags">
-        {tags.map((item) => {
-          return (
-            <Tag
-              className={currentTag === item.value ? "active-tag" : ""}
-              onClick={() => onClickTags(item)}
-              key={item.value}
-            >
-              {item.name}
-            </Tag>
-          );
-        })}
-      </div>
-      <div className="article-card-wrapper">{renderArticleCard()}</div>
+      <Spin spinning={loading}>
+        <div className="tags">
+          {tags.map((item) => {
+            return (
+              <Tag
+                className={currentTag === item.value ? "active-tag" : ""}
+                onClick={() => onClickTags(item)}
+                key={item.value}
+              >
+                {item.name}
+              </Tag>
+            );
+          })}
+        </div>
+        <div className="article-card-wrapper">{renderArticleCard()}</div>
+      </Spin>
     </div>
   );
 };

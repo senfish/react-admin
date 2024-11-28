@@ -11,8 +11,8 @@ const map = {
   2: "管理员",
   3: "访客",
 };
-interface UserListTableData {
-  data: never[];
+export interface UserListTableData {
+  data: { username: string; id: number }[];
   total: number;
   pageSize: number;
   pageNum: number;
@@ -80,7 +80,7 @@ const Members = () => {
           <>
             <Button
               type="link"
-              disabled={true}
+              // disabled={true}
               onClick={() => {
                 open({
                   mode: "edit",
@@ -119,6 +119,8 @@ const Members = () => {
             total: tableData?.total,
             pageSize: pageSize,
             current: pageNum,
+            hideOnSinglePage: true,
+            showTotal: (total) => `共 ${total} 条`,
             onChange(page, pageSize) {
               setPageNum(page);
               setPageSize(pageSize);

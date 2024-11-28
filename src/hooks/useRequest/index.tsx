@@ -7,8 +7,8 @@ interface ResponseProps {
   pageSize: number;
 }
 interface RequestOptions<T> {
-  request: (params?: Record<string, string>) => Promise<T>;
-  initParams?: Record<string, string>;
+  request: (params?: Record<string, unknown>) => Promise<T>;
+  initParams?: Record<string, unknown>;
 }
 interface ResponseOptions {
   onSucess?: (data, params) => void;
@@ -24,7 +24,7 @@ const useRequest = <T,>(
   const isFirstRender = useRef(true);
 
   const [data, setData] = useState<T>();
-  const [params, setParams] = useState(initParams);
+  const [params, setParams] = useState<Record<string, unknown>>(initParams);
   const dispatchRequest = async () => {
     try {
       await setLoading(true);
@@ -45,7 +45,7 @@ const useRequest = <T,>(
     dispatchRequest();
   }, [params]);
 
-  const run = (params?: Record<string, string>) => {
+  const run = (params?: Record<string, unknown>) => {
     setParams(() => params || {});
   };
 

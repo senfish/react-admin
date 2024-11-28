@@ -9,8 +9,6 @@ RUN npm run build
 
 # 会生产dist目录，把dist目录copy到下一个阶段里面
 # production stage
-
-
 FROM nginx:stable as production-stage
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
