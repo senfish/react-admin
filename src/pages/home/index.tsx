@@ -1,16 +1,29 @@
 import CardWrapper from "../../components/CardWrapper";
-
+import { Card } from 'antd';
+import BarChart from "./BarChart";
+import BasicLine from './BasicLine';
+import MultipleChart from './MultipleChart';
+import PieChart from './PieChart';
+import './index.less'
+import TableWrapper from "./Table";
 const Home = () => {
   return (
-    <CardWrapper>
-      <h2>待完成</h2>
+    <div className="home-page">
+      <CardWrapper>
+        <div className="top-content">
+          <Card style={{ width: '100%' }}> <BasicLine /></Card>
+          <Card style={{ width: '100%' }}><BarChart /></Card>
+        </div>
+        <div className="middle-content">
+          <Card style={{ width: '100%' }}><MultipleChart /></Card>
+        </div>
+        <div className="bottom-content">
+          <Card style={{ width: '100%' }}><TableWrapper /></Card>
+          <Card style={{ width: 350 }}><PieChart /></Card>
+        </div>
+      </CardWrapper>
+    </div>
 
-      <h3>1. 接入 pv、 uv数据 </h3>
-      <h3>2. 拖拉拽 </h3>
-      <h3>3. RabbitMQ </h3>
-      <h3>4. ElasticSearch </h3>
-      <h3>5. 支持token手动失效 </h3>
-    </CardWrapper>
   );
 };
 

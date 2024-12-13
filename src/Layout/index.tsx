@@ -9,7 +9,7 @@ import "./index.less";
 import useRequest from "../hooks/useRequest";
 import { getUserInfoDispatch } from "./services";
 
-const LayoutWrapper = (props) => {
+const LayoutWrapper = () => {
   const navigate = useNavigate();
   const [currentModule, setCurrentModule] = useState<string>();
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
@@ -33,7 +33,7 @@ const LayoutWrapper = (props) => {
       return;
     }
     const paths = location.pathname.split("/");
-    // /class/math =>  ['', 'class', 'math']
+    // /project/front-end =>  ['', 'project', 'front-end']
     if (paths[1]) {
       setCurrentModule(paths[1]);
     }
@@ -43,8 +43,11 @@ const LayoutWrapper = (props) => {
     } else {
       setSelectedKeys([targtMenu?.key]);
     }
-    getUserInfo();
   }, [location.pathname]);
+  useEffect(() => {
+    if (location.pathname === "/login") return;
+    getUserInfo();
+  }, [])
   const getSelectKey = (pathname, menusMap) => {
     let tag = false;
     let targetMenu = null;

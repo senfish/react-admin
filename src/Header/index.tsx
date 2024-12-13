@@ -24,9 +24,13 @@ const Header = ({
   const location = useLocation();
   const currentKey = getCurrentKey(location);
   const onClick: MenuProps["onClick"] = (e) => {
+    console.log('e: ', e.key);
+    // TODO可以考虑做成自动识别
     setCurrentModule(e.key);
-    if (e.key === "class") {
-      navigate("/class/math");
+    if (e.key === "project") {
+      navigate("/project/front-end");
+    } else if (e.key === "components") {
+      navigate("/components/table-filter");
     } else if (e.key === "person") {
       navigate("/person/user/info/record");
     } else if (e.key === "home") {
@@ -59,7 +63,7 @@ const Header = ({
     <div className="layout-header">
       <div className="icon-content">
         <OpenAIOutlined />
-        <span className="title">AI Center</span>
+        <span className="title">Saas Platform</span>
       </div>
       <Menu
         style={{ flex: 1 }}

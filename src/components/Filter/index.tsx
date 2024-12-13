@@ -19,6 +19,7 @@ interface FilterProps {
   colNum?: number;
   defaultCollapsed?: boolean;
   onReset?: () => void;
+  showReset?: boolean;
 }
 
 const LABEL_PADDING_SUM = 24;
@@ -33,13 +34,14 @@ const COL_HEIGHT = 28;
 //
 // 2要素，如何计算label的宽度，如何计算单个item的宽度
 
-const Filter = (props: FilterProps) => {
+const TableFilter = (props: FilterProps) => {
   const {
     items,
     maxLabelLength = DEFAULT_MAX_LABEL_WIDTH,
     colNum,
     defaultCollapsed = false,
     onReset: _onReset,
+    showReset = true,
   } = props;
   const [colWidth, setColWidth] = useState(0);
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
@@ -63,13 +65,11 @@ const Filter = (props: FilterProps) => {
       DEAULT_COL_NUM // 4
     );
     const colWidth = Math.floor(clientWidth / _colNum);
-    console.log("colWidth: ", colWidth);
     return [1, colWidth];
   };
   useEffect(() => {
     if (!ref.current) return;
-    const { width } = ref.current?.getBoundingClientRect();
-    console.log("width: ", width);
+    const { width } = ref.current!.getBoundingClientRect();
     // 计算colwidth的宽度
 
     const [, colWidth] = calculateColWidth(width);
@@ -134,17 +134,20 @@ const Filter = (props: FilterProps) => {
           );
         })}
       </div>
-      <div className="table-filter-actions">
-        <div className="table-filter-actions-reset" onReset={onReset}>
-          重置
-        </div>
-        <Divider type="vertical" />
-        <span className="actions-icon" onClick={() => setCollapsed(!collapsed)}>
-          {collapsed ? <DownCircleOutlined /> : <UpCircleOutlined />}
-        </span>
-      </div>
+      {
+        showReset ? (<div className="table-filter-actions">
+          <div className="table-filter-actions-reset" onReset={onReset}>
+            重置
+          </div>
+          <Divider type="vertical" />
+          <span className="actions-icon" onClick={() => setCollapsed(!collapsed)}>
+            {collapsed ? <DownCircleOutlined /> : <UpCircleOutlined />}
+          </span>
+        </div>) : null
+      }
+
     </div>
   );
 };
 
-export default Filter;
+export default TableFilter;

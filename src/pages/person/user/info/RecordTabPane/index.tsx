@@ -1,5 +1,5 @@
 import { Input, Select, DatePicker, Table } from "antd";
-import Filter from "../../../../../components/Filter";
+import TableFilter from "../../../../../components/Filter";
 import useRequest from "../../../../../hooks/useRequest";
 import {
   getMonitorListDispatch,
@@ -17,6 +17,7 @@ const typeMap = {
   2: "修改",
   3: "删除",
   4: "登录",
+  5: "查看"
 };
 
 const RecordTabPane = () => {
@@ -127,7 +128,7 @@ const RecordTabPane = () => {
   return (
     <div>
       <div>
-        <Filter items={items} defaultCollapsed />
+        <TableFilter items={items} defaultCollapsed />
       </div>
       <Table
         size={"small"}

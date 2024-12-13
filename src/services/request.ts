@@ -16,6 +16,7 @@ instance.interceptors.response.use(
   (response) => {
     if (response.status === 200) {
       if (response.data?.code?.startsWith("100")) {
+        // 状态码是200，但是code是以100开头，说明是业务错误
         message.error(response.data?.message);
         return Promise.reject(response.data);
       }
@@ -25,7 +26,6 @@ instance.interceptors.response.use(
   },
   (err) => {
     if (err.status === 401) {
-      // TODO
       window.location.href = "/login";
     }
     if (err.status === 400) {

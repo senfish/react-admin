@@ -1,7 +1,5 @@
-import CardWrapper from "../../../components/CardWrapper";
-
-const Config = () => {
-  return <CardWrapper><ul>
+const User = () => {
+  return <><ul>
     <li>文件树查询</li>
     <li>tab级别路由</li>
     <li>Ellipsis组件封装</li>
@@ -14,7 +12,7 @@ const Config = () => {
     auto;
     <li>为什么点击菜单会出现闪烁？</li>
     路由用了lazy的话，Suspense组件必须要跟路由组件最近的一层，否则会出现闪烁
-  </ul></CardWrapper>;
+  </ul></>;
 };
 
-export default Config;
+export default User;

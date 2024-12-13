@@ -15,7 +15,7 @@ good：
         <Route path="/user/info" element={<InfoLazy />} />
         <Route path="/user/hobby" element={<HobbyLazy />} />
       </Route>
-      <Route path="/config" element={<ConfigLazy />} />
+      <Route path="/undo" element={<ConfigLazy />} />
     </Routes>
   </Suspense>
 </Layout>
@@ -32,7 +32,7 @@ bad:
         <Route path="/user/info" element={<InfoLazy />} />
         <Route path="/user/hobby" element={<HobbyLazy />} />
       </Route>
-      <Route path="/config" element={<ConfigLazy />} />
+      <Route path="/undo" element={<ConfigLazy />} />
     </Routes>
   </Layout>
 </Suspense>

@@ -1,19 +1,25 @@
-import { lazy, Suspense, useEffect } from "react";
-import { Spin } from "antd";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { lazy } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./Layout";
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
 dayjs.locale("zh-cn");
 const HomeLazy = lazy(() => import("./pages/home"));
-const ConfigLazy = lazy(() => import("./pages/person/config"));
+// person
+const UndoLazy = lazy(() => import("./pages/person/undo"));
 const InfoLazy = lazy(() => import("./pages/person/user/info"));
 const HobbyLazy = lazy(() => import("./pages/person/user/article"));
 const MembersLazy = lazy(() => import("./pages/person/user/members"));
-const ChineseLazy = lazy(() => import("./pages/class/chinese"));
-const EnglishLazy = lazy(() => import("./pages/class/english"));
-const MathLazy = lazy(() => import("./pages/class/math"));
+// project
+const SolutionLazy = lazy(() => import("./pages/project/solution"));
+const BackEndLazy = lazy(() => import("./pages/project/backEnd"));
+const FrontEndLazy = lazy(() => import("./pages/project/frontEnd"));
+// login
 const LoginLazy = lazy(() => import("./pages/login"));
+// UI components
+const ButtonLazy = lazy(() => import("./pages/ui/button"));
+const TableFilterLazy = lazy(() => import("./pages/ui/tableFilter"));
+const EllipsisLazy = lazy(() => import("./pages/ui/ellipsis"));
 
 const App = () => {
   return (
@@ -22,6 +28,7 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route path="/login" element={<LoginLazy />} />
           <Route path="/home" element={<HomeLazy />} />
+
           <Route path="/person/*">
             <Route path="home" element={<HomeLazy />} />
             <Route path="user/*">
@@ -29,13 +36,21 @@ const App = () => {
               <Route path="article" element={<HobbyLazy />} />
               <Route path="members" element={<MembersLazy />} />
             </Route>
-            <Route path="config" element={<ConfigLazy />} />
+            <Route path="undo" element={<UndoLazy />} />
           </Route>
-          <Route path="class/*">
-            <Route path="chinese" element={<ChineseLazy />} />
-            <Route path="english" element={<EnglishLazy />} />
-            <Route path="math" element={<MathLazy />} />
+
+          <Route path="project/*">
+            <Route path="back-end" element={<BackEndLazy />} />
+            <Route path="solution" element={<SolutionLazy />} />
+            <Route path="front-end" element={<FrontEndLazy />} />
           </Route>
+
+          <Route path="components/*">
+            <Route path="button" element={<ButtonLazy />} />
+            <Route path="table-filter" element={<TableFilterLazy />} />
+            <Route path="ellipsis" element={<EllipsisLazy />} />
+          </Route>
+
         </Route>
       </Routes>
     </BrowserRouter>

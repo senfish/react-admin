@@ -9,6 +9,8 @@ import { StarFilled, StarOutlined } from "@ant-design/icons";
 import { Tag, Spin } from "antd";
 import useRequest from "../../../../hooks/useRequest";
 import axios from "axios";
+import Ellipsis from "../../../../components/Ellipsis";
+import { MODULE_MAP, trackRequest } from "../../../../services/track";
 
 const tags = [
   {
@@ -40,27 +42,38 @@ const Hobby = () => {
     request: getArticleDispatch,
   });
   console.log("data: ", data);
-
+  const { run: setTrackParams } = useRequest({
+    request: trackRequest
+  })
   useEffect(() => {
     run({ currentTag });
   }, [currentTag]);
   const clickCard = (item: ArticleItem) => {
+    // 发送埋点
+    setTrackParams({
+      type: 5,
+      module: MODULE_MAP.ARTICLE
+    })
     window.open(`https://juejin.cn/post/${item.article_id}`);
   };
   const renderArticleCard = () => {
     return data?.map((item) => {
       return (
         <div
-          // key={item.article_id}
+          key={item.article_id}
           className="article-card"
           onClick={() => clickCard(item)}
         >
           <div className="article-card-title">{item.title}</div>
-          <div className="article-card-content">{item.brief_content}</div>
+          <div className="article-card-content">
+            <Ellipsis line={2} title={item.brief_content}>
+              <span>{item.brief_content}</span>
+            </Ellipsis>
+
+          </div>
           <div className="article-card-footer">
             <span className="article-flex">
               <StarOutlined />
-              {/* <StarFilled /> */}
               <span className="article-count">{item.collect_count}</span>
             </span>
             <span className="article-flex">

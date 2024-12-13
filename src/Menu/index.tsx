@@ -5,6 +5,13 @@ import {
   FacebookOutlined,
   PieChartOutlined,
   SettingOutlined,
+  FontSizeOutlined,
+  RadarChartOutlined,
+  DeploymentUnitOutlined,
+  LayoutOutlined,
+  MacCommandOutlined,
+  SignatureOutlined,
+  EllipsisOutlined,
 } from "@ant-design/icons";
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -18,8 +25,12 @@ export const headerMenus: MenuItem[] = [
     label: "个人信息",
   },
   {
-    key: "class",
-    label: "学科分类",
+    key: "project",
+    label: "项目介绍",
+  },
+  {
+    key: "components",
+    label: "业务组件",
   },
 ];
 
@@ -60,34 +71,41 @@ export const siderMenus: { [key: string]: SiderMenuProps[] } = {
       ],
     },
     {
-      key: "/person/config",
-      label: "配置",
-      icon: <SettingOutlined />,
-      path: "/person/config",
-      includesUrl: ["/person/config"],
+      key: "/person/undo",
+      label: "待办",
+      icon: <SignatureOutlined />,
+      path: "/person/undo",
+      includesUrl: ["/person/undo"],
     },
   ],
-  class: [
+  project: [
     {
-      key: "/class/math",
-      icon: <PieChartOutlined />,
-      label: "数学",
-      path: "/class/math",
-      includesUrl: ["/class/math"],
+      key: "/project/front-end",
+      icon: <MacCommandOutlined />,
+      label: "前端",
+      path: "/project/front-end",
+      includesUrl: ["/project/front-end"],
     },
     {
-      key: "/class/chinese",
-      label: "语文",
+      key: "/project/back-end",
+      label: "后端",
       icon: <SnippetsOutlined />,
-      path: "/class/chinese",
-      includesUrl: ["/class/chinese"],
+      path: "/project/back-end",
+      includesUrl: ["/project/back-end"],
     },
+    // {
+    //   key: "/project/deploy",
+    //   label: "部署",
+    //   icon: <DeploymentUnitOutlined />,
+    //   path: "/project/deploy",
+    //   includesUrl: ["/project/deploy"],
+    // },
     {
-      key: "/class/english",
-      label: "英语",
-      icon: <FacebookOutlined />,
-      path: "/class/english",
-      includesUrl: ["/class/english"],
+      key: "/project/solution",
+      label: "中台常见方案",
+      icon: <LayoutOutlined />,
+      path: "/project/solution",
+      includesUrl: ["/project/solution"],
     },
   ],
   home: [
@@ -97,4 +115,27 @@ export const siderMenus: { [key: string]: SiderMenuProps[] } = {
       label: "首页",
     },
   ],
+  components: [
+    // {
+    //   key: '/components/button',
+    //   label: '按钮',
+    //   icon: <FontSizeOutlined />,
+    //   path: "/components/button",
+    //   includesUrl: ["/components/button"],
+    // },
+    {
+      key: '/components/table-filter',
+      label: '表格Filter',
+      icon: <RadarChartOutlined />,
+      path: "/components/table-filter",
+      includesUrl: ["/components/table-filter"],
+    },
+    {
+      key: '/components/ellipsis',
+      label: 'Ellipsis',
+      icon: <EllipsisOutlined />,
+      path: "/components/ellipsis",
+      includesUrl: ["/components/ellipsis"],
+    }
+  ]
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
@@ -50,7 +50,7 @@ const Info = () => {
   return (
     <div className="user-info-page">
       <ContainerHeader
-        title="成员管理"
+        title="信息管理"
         desc="tab级别路由示例"
         style={{ borderBottom: "none" }}
       />
