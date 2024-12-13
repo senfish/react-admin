@@ -3,7 +3,7 @@ import { Card } from 'antd';
 import BarChart from "./BarChart";
 import BasicLine from './BasicLine';
 import MultipleChart from './MultipleChart';
-import PieChart from './PieChart';
+import PieChart from './PieChartComponent';
 import './index.less'
 import TableWrapper from "./Table";
 const Home = () => {
