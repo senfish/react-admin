@@ -1,11 +1,11 @@
-FROM node:18-alpine3.14 as build-stage
+# FROM node:18-alpine3.14 as build-stage
 
-WORKDIR /app
-COPY package.json .
-RUN npm config set registry https://registry.npmmirror.com/
-RUN npm install
-COPY . .
-RUN npm run build
+# WORKDIR /app
+# COPY package.json .
+# RUN npm config set registry https://registry.npmmirror.com/
+# RUN npm install
+# COPY . .
+# RUN npm run build
 
 # 会生产dist目录，把dist目录copy到下一个阶段里面
 # production stage
