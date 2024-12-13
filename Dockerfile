@@ -10,7 +10,7 @@
 # production stage
 FROM nginx:stable as production-stage
 WORKDIR /app
-
+COPY . .
 COPY /app/dist /usr/share/nginx/html
 COPY /app/docker.nginx.conf /etc/nginx/conf.d/default.conf
 
