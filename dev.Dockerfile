@@ -11,4 +11,4 @@ CMD ["nginx", "-g", "daemon off;"]
 
 
 # docker build -f dev.Dockerfile -t react-admin .
-# docker run -p 80:80 --name react-admin react-admin
+# docker run -d -p 80:80 --name react-admin react-admin
