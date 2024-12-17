@@ -1,0 +1,1 @@
+import{j as e}from"./index-BaYBV5Jy.js";const i=s=>{const{title:t,desc:a,style:n={}}=s;return e.jsxs("div",{className:"container-header",style:n,children:[e.jsx("div",{className:"container-title",children:t}),a&&e.jsx("span",{className:"container-tips",children:"tab级别路由示例"})]})};export{i as C};

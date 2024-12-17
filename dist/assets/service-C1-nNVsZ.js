@@ -1,0 +1,1 @@
+import{e as t}from"./index-BaYBV5Jy.js";const r=async e=>await t({method:"POST",data:{id:e},url:"/user/delete"}),a=async e=>await t({method:"POST",data:e,url:"/user/register"}),u=async e=>await t({method:"POST",data:e,url:"/user/list"}),c=async e=>await t({method:"POST",data:e,url:"/user/update"});export{a as c,r as d,u as g,c as u};
