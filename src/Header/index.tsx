@@ -24,7 +24,6 @@ const Header = ({
   const location = useLocation();
   const currentKey = getCurrentKey(location);
   const onClick: MenuProps["onClick"] = (e) => {
-    console.log('e: ', e.key);
     // TODO可以考虑做成自动识别
     setCurrentModule(e.key);
     if (e.key === "project") {
@@ -66,7 +65,7 @@ const Header = ({
         <span className="title">Saas Platform</span>
       </div>
       <Menu
-        style={{ flex: 1 }}
+        style={{ flex: 1, borderBottom: "none", }}
         onClick={onClick}
         selectedKeys={[currentKey]}
         mode="horizontal"

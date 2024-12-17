@@ -11,9 +11,9 @@ const English = () => {
     <div className="content">
       <div className="second-title">Table Filter</div>
       <img width={900} height={450} src={platformPng} />
-      <div style={{ marginBottom: 12 }}>大部分中台列表页面布局都如上图所示，或者是基于上面的变种。为了更好的快速落地新的列表页面，可以把列表筛选抽了一个自定义的布局组件，称为 <b>Table Filter</b>。或许你也可以使用ProTable方案，它是将Filter（筛选条件）跟Table耦合在一起。</div>
+      <div style={{ marginBottom: 12 }}>大部分中台列表页面布局都如上图所示，或者是基于上面的变种。为了更好的快速落地新的列表页面，可以把列表筛选抽了一个自定义的布局组件，称为 <b>Table Filter</b>。</div>
       <div style={{ marginBottom: 20 }}><a href='/person/user/info/record' target='_blank'>案例页面</a></div>
-      <div className="second-title" style={{ marginBottom: 12 }}><b>收益在哪</b> </div>
+      <div className="second-title" style={{ marginBottom: 12 }}><b>收益</b> </div>
       <div style={{ marginBottom: 20 }}>
         <ul>
           <li>- 支持自动布局</li>
