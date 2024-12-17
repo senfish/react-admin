@@ -33,8 +33,8 @@ const English = () => {
             readOnly: true,
           }}
           value={TableFilterCode}
-          height={600}
-          width={'80%'}
+          height={480}
+          width={'50%'}
         />
       </div>
       <div className="second-title" style={{ marginBottom: 12, marginTop: 20 }}>useDialog</div>
@@ -93,8 +93,8 @@ const English = () => {
           readOnly: true,
         }}
         value={EllipsisCode}
-        width={'80%'}
-        height={200}
+        width={'50%'}
+        height={140}
       />
     </div>
   </div>
