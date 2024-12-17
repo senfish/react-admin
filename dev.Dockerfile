@@ -1,14 +1,14 @@
-FROM node:18-alpine3.14
-
+FROM node:18-alpine3.21 as build-stage
 WORKDIR /app
-COPY dist/* /app/dist
-COPY docker.nginx.conf /app/docker.nginx.conf
+COPY . .
 
-# RUN ls  --progress=plain --no-cache
-# COPY  /app/dist /usr/share/nginx/html
-# COPY /app/docker.nginx.conf /etc/nginx/conf.d/default.conf
+
+FROM nginx:1.26.2-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+COPY --from=build-stage /app/docker.nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
 
-
+# docker build -f dev.Dockerfile -t react-admin .
+# docker run -p 80:80 --name react-admin react-admin

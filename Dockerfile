@@ -1,4 +1,4 @@
-FROM node:18-alpine3.14 as build-stage
+FROM node:18-alpine3.21 as build-stage
 
 WORKDIR /app
 
@@ -12,8 +12,8 @@ COPY . .
 
 RUN npm run build
 
-# 会生产dist目录，把dist目录copy到下一个阶段里面
-FROM node:18-alpine3.14 as production-stage
+## production-stage 
+FROM nginx:1.26.2-alpine as production-stage
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 COPY --from=build-stage /app/docker.nginx.conf /etc/nginx/conf.d/default.conf
