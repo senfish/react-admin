@@ -11,6 +11,6 @@ export const trackRequest = async <T>(params) => {
     data: {
       ...params,
     },
-    url: "/monitor/track",
+    url: "/api/monitor/track",
   });
 };
