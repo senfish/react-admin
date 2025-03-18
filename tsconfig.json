@@ -14,15 +14,13 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
     "incremental": false,
     "jsx": "react-jsx",
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
       "@hooks": ["src/hooks/index"]
     },
-    "declaration": false,
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
