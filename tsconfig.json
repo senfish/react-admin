@@ -15,7 +15,7 @@
     "isolatedModules": true,
     "incremental": false,
     "jsx": "react-jsx",
-    "baseUrl": ".src",
+    "baseUrl": "./src",
     "paths": {
       "@/*": ["src/*"],
       "@hooks": ["src/hooks/index"]
