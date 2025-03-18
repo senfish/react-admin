@@ -1,15 +1,13 @@
-import { Input, Select, DatePicker, Table } from "antd";
-import TableFilter from "../../../../../components/Filter";
-import useRequest from "../../../../../hooks/useRequest";
-import {
-  getMonitorListDispatch,
-  MonitorListData,
-  MonitorListItem,
-} from "./services";
-import { useEffect, useState } from "react";
-import { getUserListDispatch } from "../../members/service";
-import { UserListTableData } from "../../members";
+import { Select, DatePicker, Table } from "antd";
+import TableFilter from "@/components/Filter";
+import { useRequest } from "@hooks";
+import { getMonitorListDispatch, MonitorListData } from "./services";
+import { useEffect } from "react";
+import { getUserListDispatch } from "@/pages/person/user/members/service";
+import { UserListTableData } from "@/pages/person/user/members";
 import dayjs from "dayjs";
+import { FilterProps, useChange } from "./store";
+
 const { RangePicker } = DatePicker;
 
 const typeMap = {
@@ -17,18 +15,16 @@ const typeMap = {
   2: "修改",
   3: "删除",
   4: "登录",
-  5: "查看"
+  5: "查看",
 };
 
 const RecordTabPane = () => {
-  const [pageNum, setPageNo] = useState(1);
-  const [time, setTime] = useState<string[]>();
-  const [type, setType] = useState();
-  const [user, setUser] = useState();
-  const { data, run } = useRequest<MonitorListData>({
+  const { filter, onChangeFilter, onResetFilter } = useChange();
+  const { pageNum, time, type, user } = filter;
+  const { data, run } = useRequest<FilterProps, MonitorListData>({
     request: getMonitorListDispatch,
   });
-  const { data: userList } = useRequest<UserListTableData>({
+  const { data: userList } = useRequest<{ pageSize: number }, UserListTableData>({
     request: getUserListDispatch,
     initParams: {
       pageSize: 1000,
@@ -44,9 +40,9 @@ const RecordTabPane = () => {
   }, [pageNum, time, type, user]);
   const onChange = (dates, dateStrings) => {
     if (!dates) {
-      return setTime(undefined);
+      return onChangeFilter("time")(undefined);
     }
-    setTime(dateStrings);
+    onChangeFilter("time")(dateStrings);
   };
   const disabledDate = (current) => {
     return current && current > dayjs();
@@ -86,9 +82,7 @@ const RecordTabPane = () => {
         <Select
           placeholder="请输入用户名"
           allowClear
-          onChange={(value) => {
-            setUser(value);
-          }}
+          onChange={onChangeFilter("user")}
           options={(userList?.data || []).map((item) => {
             return {
               label: item.username,
@@ -111,26 +105,26 @@ const RecordTabPane = () => {
               value: key,
             };
           })}
-          onChange={(value) => {
-            setType(value);
-          }}
+          onChange={onChangeFilter("type")}
         />
       ),
     },
     {
       label: "操作日期",
-      field: "user",
-      component: (
-        <RangePicker onChange={onChange} disabledDate={disabledDate} />
-      ),
+      field: "time",
+      component: <RangePicker onChange={onChange} disabledDate={disabledDate} />,
     },
   ];
+  const onReset = () => {
+    onResetFilter();
+  };
   return (
     <div>
       <div>
-        <TableFilter items={items} defaultCollapsed />
+        <TableFilter onReset={onReset} items={items} defaultCollapsed />
       </div>
       <Table
+        rowKey={(record) => record.id}
         size={"small"}
         columns={columns}
         dataSource={data?.data}
@@ -141,8 +135,7 @@ const RecordTabPane = () => {
           hideOnSinglePage: true,
           showTotal: (total) => `共 ${total} 条`,
           onChange(page, pageSize) {
-            console.log(page, pageSize);
-            setPageNo(page);
+            onChangeFilter("pageNum")(page);
           },
         }}
       />

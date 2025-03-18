@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Button, Divider, Modal, Table, Tag } from "antd";
-import { useDialog } from "../../../../hooks/useDialog";
+import { useDialog } from "@hooks";
 import CreateUserDialog from "./CreateUser";
 import "./index.less";
 import { PlusOutlined } from "@ant-design/icons";
 import { deleteUserDispatch, getUserListDispatch } from "./service";
-import ContainerHeader from "../../../../common/Title";
+import ContainerHeader from "@/common/Title";
 const map = {
   1: "超级管理员",
   2: "管理员",
@@ -29,9 +29,7 @@ const Members = () => {
   const { open, holder } = useDialog(CreateUserDialog);
   const [pageNum, setPageNum] = useState(defaultPageNum);
   const [pageSize, setPageSize] = useState(defaultPageSize);
-  const getList = async (
-    options = { pageNum: defaultPageNum, pageSize: defaultPageSize }
-  ) => {
+  const getList = async (options = { pageNum: defaultPageNum, pageSize: defaultPageSize }) => {
     const { pageNum, pageSize } = options;
     const res = (await getUserListDispatch({
       pageNum,
@@ -112,6 +110,7 @@ const Members = () => {
           </Button>
         </div>
         <Table
+          rowKey={(record) => record.id}
           columns={columns}
           size={"small"}
           dataSource={tableData?.data}

@@ -1,5 +1,5 @@
 import { Modal, Form, Input, Select } from "antd";
-import { UserDialogProps } from "../../../../../hooks/useDialog";
+import { UserDialogProps } from "@hooks";
 import { createUserDispatch, updateUserDispatch } from "../service";
 import { useEffect } from "react";
 
@@ -15,13 +15,7 @@ type FieldType = {
   role?: string[];
 };
 const CreateUserDialog = (props: CreateUserProps) => {
-  const {
-    visible,
-    closeDialog,
-    getList = () => {},
-    mode = "create",
-    record = {},
-  } = props;
+  const { visible, closeDialog, getList = () => {}, mode = "create", record = {} } = props;
   const [form] = Form.useForm();
   useEffect(() => {
     if (record.id) {
@@ -57,13 +51,7 @@ const CreateUserDialog = (props: CreateUserProps) => {
   };
   const title = mode === "create" ? "添加" : mode === "edit" ? "编辑" : "查看";
   return (
-    <Modal
-      title={`${title}用户`}
-      open={visible}
-      onCancel={closeDialog}
-      width={600}
-      onOk={onOk}
-    >
+    <Modal title={`${title}用户`} open={visible} onCancel={closeDialog} width={600} onOk={onOk}>
       <Form
         form={form}
         name="basic"
@@ -88,11 +76,7 @@ const CreateUserDialog = (props: CreateUserProps) => {
         >
           <Input.Password />
         </Form.Item> */}
-        <Form.Item<FieldType>
-          label="角色类型"
-          name="role"
-          rules={[{ required: true, message: "请选择角色" }]}
-        >
+        <Form.Item<FieldType> label="角色类型" name="role" rules={[{ required: true, message: "请选择角色" }]}>
           <Select allowClear>
             <Select.Option key={1} value={1}>
               超级管理员

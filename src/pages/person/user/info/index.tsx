@@ -49,21 +49,8 @@ const Info = () => {
   };
   return (
     <div className="user-info-page">
-      <ContainerHeader
-        title="信息管理"
-        desc="tab级别路由示例"
-        style={{ borderBottom: "none" }}
-      />
-      <Tabs
-        className="user-info-tab"
-        activeKey={activeKey}
-        onTabClick={onTabClick}
-        type="card"
-      >
-        {tabs.map((item) => {
-          return <TabPane tab={item.label} key={item.key} />;
-        })}
-      </Tabs>
+      <ContainerHeader title="信息管理" desc="tab级别路由示例" style={{ borderBottom: "none" }} />
+      <Tabs className="user-info-tab" activeKey={activeKey} onTabClick={onTabClick} type="card" items={tabs} />
       <div className="tab-content">{renderTabs()}</div>
     </div>
   );

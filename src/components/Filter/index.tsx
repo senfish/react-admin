@@ -1,11 +1,8 @@
-import { Divider, Input, Space } from "antd";
+import { Divider, Form, Input, Space } from "antd";
 import "./index.less";
 import React, { ReactElement, useEffect, useRef, useState } from "react";
-import {
-  DownCircleOutlined,
-  DownOutlined,
-  UpCircleOutlined,
-} from "@ant-design/icons";
+import { DownCircleOutlined, DownOutlined, UpCircleOutlined } from "@ant-design/icons";
+import { FormInstance } from "antd/lib";
 
 interface FilterItem {
   label?: string;
@@ -20,6 +17,7 @@ interface FilterProps {
   defaultCollapsed?: boolean;
   onReset?: () => void;
   showReset?: boolean;
+  form?: FormInstance;
 }
 
 const LABEL_PADDING_SUM = 24;
@@ -42,17 +40,19 @@ const TableFilter = (props: FilterProps) => {
     defaultCollapsed = false,
     onReset: _onReset,
     showReset = true,
+    form: formProps,
   } = props;
   const [colWidth, setColWidth] = useState(0);
   const [collapsed, setCollapsed] = useState(defaultCollapsed);
+  const [form] = Form.useForm();
+  const formInstance = formProps ?? form;
+
   const ref = useRef<HTMLDivElement>();
   const calculateColWidth = (clientWidth: number = DEFAULT_FILTER_WIDTH) => {
     if (colNum) {
       const colWidth = Math.max(MIN_ITEM_LENGTH, clientWidth / colNum);
       return [colNum, colWidth];
     }
-    // 如何计算出每一个itme的width的宽度的？
-
     // clientWidth / DEAULT_COL_NUM
     // 当前的宽度 / items
     // 默认宽度/默认个数 根 最小的长度 + padiding 取最大值。
@@ -60,10 +60,12 @@ const TableFilter = (props: FilterProps) => {
       Math.floor(DEFAULT_FILTER_WIDTH / DEAULT_COL_NUM), //
       MIN_ITEM_LENGTH + RIGHT_PADDING // 最小的宽度
     );
+
     const _colNum = Math.min(
       Math.floor(clientWidth / itemWidth), //
       DEAULT_COL_NUM // 4
     );
+
     const colWidth = Math.floor(clientWidth / _colNum);
     return [1, colWidth];
   };
@@ -75,6 +77,24 @@ const TableFilter = (props: FilterProps) => {
     const [, colWidth] = calculateColWidth(width);
     setColWidth(colWidth);
   }, [items]);
+
+  // useEffect(() => {
+  //   const resizeObs = new ResizeObserver((entries) => {
+  //     for (const entry of entries) {
+  //       const [, newColWidth] = calculateColWidth(
+  //         entry.contentRect.width,
+  //       );
+  //       setColWidth(newColWidth);
+  //     }
+  //   });
+  //   resizeObs.observe(ref.current);
+  //   return () => {
+  //     if (ref.current) {
+  //       resizeObs && resizeObs.disconnect();
+  //     }
+  //   };
+  // }, [ref.current, items]);
+
   const getStrLength = (str: string, fontSize = 13) => {
     const charLength = str.split("").reduce((prev, cur) => {
       if (cur.charCodeAt(0) > 0 && cur.charCodeAt(0) < 128) {
@@ -86,9 +106,7 @@ const TableFilter = (props: FilterProps) => {
   };
 
   const getMaxLabelLength = (items) => {
-    const lengths = items.map((item) =>
-      typeof item.label === "string" ? getStrLength(item.label) : 0
-    );
+    const lengths = items.map((item) => (typeof item.label === "string" ? getStrLength(item.label) : 0));
     return Math.min(Math.max(...lengths), maxLabelLength) || maxLabelLength;
   };
   const getCollapsedStyle = () => {
@@ -98,55 +116,56 @@ const TableFilter = (props: FilterProps) => {
       overflow: "hidden",
     };
   };
-  const onReset = () => {
+  const handleReset = () => {
+    formInstance.resetFields();
     _onReset?.();
   };
   return (
-    <div className="table-filter">
-      <div
-        className="table-filter-items"
-        ref={ref}
-        style={collapsed ? getCollapsedStyle() : undefined}
-      >
-        {items.map((item) => {
-          return (
-            <div
-              className="table-filter-item-wrapper"
-              style={{
-                maxWidth: MAX_ITEM_LENGTH + RIGHT_PADDING,
-                width: colWidth,
-                paddingRight: RIGHT_PADDING,
-                marginBottom: BOTTOM_PADDING,
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                "--label-width": `${getMaxLabelLength(items)}px`,
-              }}
-            >
-              <Space.Compact className="table-compact" key={item.field}>
-                <label className="table-compact-label">{item.label}</label>
-                {React.cloneElement(item.component, {
-                  style: {
-                    height: COL_HEIGHT,
-                  },
-                })}
-              </Space.Compact>
+    <Form form={formInstance}>
+      <div className="table-filter">
+        <div className="table-filter-items" ref={ref} style={collapsed ? getCollapsedStyle() : undefined}>
+          {items.map((item) => {
+            return (
+              <div
+                key={item.field}
+                className="table-filter-item-wrapper"
+                style={{
+                  maxWidth: MAX_ITEM_LENGTH + RIGHT_PADDING,
+                  width: colWidth,
+                  paddingRight: RIGHT_PADDING,
+                  marginBottom: BOTTOM_PADDING,
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                  // @ts-ignore
+                  "--label-width": `${getMaxLabelLength(items)}px`,
+                }}
+              >
+                <Space.Compact className="table-compact" key={item.field}>
+                  <label className="table-compact-label">{item.label}</label>
+                  <Form.Item name={item.field} noStyle>
+                    {React.cloneElement(item.component, {
+                      style: {
+                        height: COL_HEIGHT,
+                      },
+                    })}
+                  </Form.Item>
+                </Space.Compact>
+              </div>
+            );
+          })}
+        </div>
+        {showReset ? (
+          <div className="table-filter-actions">
+            <div className="table-filter-actions-reset" onClick={handleReset}>
+              重置
             </div>
-          );
-        })}
-      </div>
-      {
-        showReset ? (<div className="table-filter-actions">
-          <div className="table-filter-actions-reset" onReset={onReset}>
-            重置
+            <Divider type="vertical" />
+            <span className="actions-icon" onClick={() => setCollapsed(!collapsed)}>
+              {collapsed ? <DownCircleOutlined /> : <UpCircleOutlined />}
+            </span>
           </div>
-          <Divider type="vertical" />
-          <span className="actions-icon" onClick={() => setCollapsed(!collapsed)}>
-            {collapsed ? <DownCircleOutlined /> : <UpCircleOutlined />}
-          </span>
-        </div>) : null
-      }
-
-    </div>
+        ) : null}
+      </div>
+    </Form>
   );
 };
 

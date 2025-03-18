@@ -32,15 +32,12 @@ instance.interceptors.response.use(
       message.error(err.response?.data?.message || err?.message);
       return Promise.reject(message); // 一定要抛出reject，不然request会认为你的请求是成功的
     }
+    message.error(err?.message);
+    return Promise.reject(err);
   }
 );
 
-export const request = async <T>({
-  method = "GET",
-  url,
-  params = {},
-  data = {},
-}: RequestOptions): Promise<T> => {
+export const request = async <T>({ method = "GET", url, params = {}, data = {} }: RequestOptions): Promise<T> => {
   const token = localStorage.getItem("token");
   return await instance({
     method,

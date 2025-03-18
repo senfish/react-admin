@@ -1,39 +1,39 @@
 import { useEffect, useRef, useState } from "react";
 
-interface ResponseProps {
-  data: unknown[];
-  total: number;
-  pageNo: number;
-  pageSize: number;
+//params  T | Record<string, never> | undefined
+interface RequestOptions<T, K> {
+  request: (data?: T | Record<string, never>) => Promise<K>;
+  initParams?: T | Record<string, never> | undefined;
 }
-interface RequestOptions<T> {
-  request: (params?: Record<string, unknown>) => Promise<T>;
-  initParams?: Record<string, unknown>;
+interface ResponseOptions<T, K> {
+  onSuccess?: (data: K, params: T | Record<string, never> | undefined) => void;
+  onError?: (err: unknown) => void;
 }
-interface ResponseOptions {
-  onSucess?: (data, params) => void;
-  onError?: (err) => void;
-}
-const useRequest = <T,>(
-  requestOptions: RequestOptions<T>,
-  responseOptions?: ResponseOptions
-) => {
+const useRequest = <T, K>(
+  requestOptions: RequestOptions<T, K>,
+  responseOptions?: ResponseOptions<T, K>
+): {
+  loading: boolean;
+  data: K;
+  run: (params?: T | Record<string, never> | undefined) => Promise<void>;
+} => {
   const { initParams, request } = requestOptions;
-  const { onSucess, onError } = responseOptions || {};
+  const { onSuccess, onError } = responseOptions || {};
   const [loading, setLoading] = useState(false);
   const isFirstRender = useRef(true);
 
-  const [data, setData] = useState<T>();
-  const [params, setParams] = useState<Record<string, unknown>>(initParams);
-  const dispatchRequest = async () => {
+  const [data, setData] = useState<K>();
+  // const [params, setParams] = useState<T | Record<string, never>>(initParams);
+  const dispatchRequest = async (params: T | Record<string, never> | undefined) => {
     try {
       await setLoading(true);
       const data = await request(params);
       await setData(data);
-      onSucess?.(data, params);
+      onSuccess?.(data, params);
       await setLoading(false);
     } catch (err) {
       onError?.(err);
+      await setLoading(false);
     }
   };
   useEffect(() => {
@@ -42,11 +42,15 @@ const useRequest = <T,>(
       isFirstRender.current = false;
       return;
     }
-    dispatchRequest();
-  }, [params]);
+    dispatchRequest(initParams);
+  }, []);
 
-  const run = (params?: Record<string, unknown>) => {
-    setParams(() => params || {});
+  const run = async (params: T | Record<string, never> | undefined) => {
+    // setParams(() => params);
+    await dispatchRequest(params);
+    // return new Promise((resolve) => {
+    //   resolve(dispatchRequest());
+    // });
   };
 
   return { loading, data, run };

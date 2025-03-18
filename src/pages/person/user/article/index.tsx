@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 import { getArticleDispatch } from "./services";
-import ContainerHeader from "../../../../common/Title";
+import ContainerHeader from "@/common/Title";
 import "./index.less";
-import CommentIcon from "../../../../components/CommentIcon";
-import LikeIcon from "../../../../components/LikeIcon";
-import ViewIcon from "../../../../components/ViewIcon";
-import { StarFilled, StarOutlined } from "@ant-design/icons";
+import CommentIcon from "@/components/CommentIcon";
+import LikeIcon from "@/components/LikeIcon";
+import ViewIcon from "@/components/ViewIcon";
+import { StarOutlined } from "@ant-design/icons";
 import { Tag, Spin } from "antd";
-import useRequest from "../../../../hooks/useRequest";
-import axios from "axios";
-import Ellipsis from "../../../../components/Ellipsis";
-import { MODULE_MAP, trackRequest } from "../../../../services/track";
+import { useRequest } from "@hooks";
+import Ellipsis from "@/components/Ellipsis";
+import { MODULE_MAP, trackRequest } from "@/services/track";
 
-const tags = [
+type CurrentTag = "1" | "2" | "3"; // 1最新  2点赞  3收藏
+
+const tags: { name: string; value: CurrentTag }[] = [
   {
     name: "最新",
     value: "1",
@@ -37,14 +38,13 @@ export interface ArticleItem {
 }
 
 const Hobby = () => {
-  const [currentTag, setCurrentTag] = useState("1");
-  const { data, run, loading } = useRequest<ArticleItem[]>({
+  const [currentTag, setCurrentTag] = useState<CurrentTag>("1");
+  const { data, run, loading } = useRequest<{ currentTag: CurrentTag }, ArticleItem[]>({
     request: getArticleDispatch,
   });
-  console.log("data: ", data);
   const { run: setTrackParams } = useRequest({
-    request: trackRequest
-  })
+    request: trackRequest,
+  });
   useEffect(() => {
     run({ currentTag });
   }, [currentTag]);
@@ -52,24 +52,19 @@ const Hobby = () => {
     // 发送埋点
     setTrackParams({
       type: 5,
-      module: MODULE_MAP.ARTICLE
-    })
+      module: MODULE_MAP.ARTICLE,
+    });
     window.open(`https://juejin.cn/post/${item.article_id}`);
   };
   const renderArticleCard = () => {
     return data?.map((item) => {
       return (
-        <div
-          key={item.article_id}
-          className="article-card"
-          onClick={() => clickCard(item)}
-        >
+        <div key={item.article_id} className="article-card" onClick={() => clickCard(item)}>
           <div className="article-card-title">{item.title}</div>
           <div className="article-card-content">
             <Ellipsis line={2} title={item.brief_content}>
               <span>{item.brief_content}</span>
             </Ellipsis>
-
           </div>
           <div className="article-card-footer">
             <span className="article-flex">
@@ -93,8 +88,8 @@ const Hobby = () => {
       );
     });
   };
-  const onClickTags = (item: { value: string }) => {
-    setCurrentTag(item.value);
+  const onClickTags = (value: CurrentTag) => {
+    setCurrentTag(value);
   };
   return (
     <div className="article-page">
@@ -105,7 +100,7 @@ const Hobby = () => {
             return (
               <Tag
                 className={currentTag === item.value ? "active-tag" : ""}
-                onClick={() => onClickTags(item)}
+                onClick={() => onClickTags(item.value)}
                 key={item.value}
               >
                 {item.name}

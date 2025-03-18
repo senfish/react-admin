@@ -6,7 +6,7 @@ export interface UserDialogProps {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const useDialog = <T,>(Component) => {
+const useDialog = <T,>(Component) => {
   const [visible, setVisible] = React.useState<boolean>(false);
   const detailRef = React.useRef<any>({});
   const open = useCallback((detail: T) => {
@@ -30,3 +30,5 @@ export const useDialog = <T,>(Component) => {
   }, [visible]);
   return { open, closeDialog, holder };
 };
+
+export default useDialog;

@@ -2,24 +2,21 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Col, Form, Input, Row } from "antd";
 import "./index.less";
-import useRequest from "../../hooks/useRequest";
+import { useRequest } from "@hooks";
 import { loginDispatch } from "./services";
 import { BackgroundImg, LeftImg, OverlayMask } from "./mask";
-// import { useRequest } from "ahooks";
 
 const Login = (props) => {
+  console.log("login");
   const { hasAuth } = props;
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const { run } = useRequest<{ token: string }>(
+  const { run } = useRequest<null, { token: string }>(
     { request: loginDispatch },
     {
-      onSucess: (data) => {
+      onSuccess: (data) => {
         localStorage.setItem("token", `Bearer ` + data.token);
         navigate("/home", { replace: true });
-      },
-      onError: (err) => {
-        console.log("onError: ", err);
       },
     }
   );
@@ -45,20 +42,11 @@ const Login = (props) => {
           >
             <Input placeholder="默认admin" />
           </Form.Item>
-          <Form.Item
-            label="密码"
-            name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
-          >
+          <Form.Item label="密码" name="password" rules={[{ required: true, message: "Please input your password!" }]}>
             <Input placeholder="默认密码123456" />
           </Form.Item>
         </Form>
-        <Button
-          className="submit"
-          onClick={login}
-          type="primary"
-          style={{ width: "100%" }}
-        >
+        <Button className="submit" onClick={login} type="primary" style={{ width: "100%" }}>
           登录
         </Button>
       </div>
