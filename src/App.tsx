@@ -1,6 +1,4 @@
-import { lazy } from "react";
-import { BrowserRouter, Routes, Route, RouterProvider } from "react-router-dom";
-import Layout from "./layout";
+import { RouterProvider } from "react-router-dom";
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
 import { ConfigProvider } from "antd";
