@@ -1,0 +1,75 @@
+.layout-header {
+  height: 48px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 2px 4px rgba(27, 31, 35, 0.08);
+  padding: 0px 24px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 500;
+  background-color: #fff;
+
+  .icon-content {
+    .svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .title {
+      margin-left: 16px;
+      margin-right: 40px;
+    }
+  }
+
+  .github {
+    text-decoration: none;
+    color: inherit;
+    margin-right: 16px;
+
+    .icon {
+      width: 30px;
+      height: 30px;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+
+  .user {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 4px;
+
+      &:hover {
+        background-color: rgba(27, 31, 35, 0.06);
+        border-radius: 50%;
+      }
+
+      .user-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      }
+
+
+    }
+  }
+
+}
