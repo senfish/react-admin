@@ -1,6 +1,6 @@
 ## 中后台模版框架
 
-[体验地址](http://sensfish.cn//login)
+[体验地址](http://sensfish.cn/login)
 
 ## deploy
 
