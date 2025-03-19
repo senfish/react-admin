@@ -1,4 +1,4 @@
-import { request } from "../../../../../services/request";
+import { request } from "@/services/request";
 
 export interface MonitorListItem {
   id: number;
@@ -16,6 +16,6 @@ export const getMonitorListDispatch = async <T>(data = {}) => {
   return await request<T>({
     method: "POST",
     data: data,
-    url: "/monitor/monitor_list",
+    url: "/api/monitor/monitor_list",
   });
 };
