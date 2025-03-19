@@ -1,10 +1,9 @@
 import axios, { AxiosResponse } from "axios";
 import { message } from "antd";
 
-console.log("import.meta.env.VITE_HOST", import.meta.env.VITE_HOST);
-
 const instance = axios.create({
-  baseURL: `http://${import.meta.env.VITE_HOST}:3000`,
+  baseURL: import.meta.env.MODE === "development" ? "http://localhost:8002/" : "/",
+  timeout: 30 * 1000,
 });
 interface RequestOptions {
   method: "POST" | "GET" | "DELETE";
