@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { message } from "antd";
 
 const instance = axios.create({
-  baseURL: import.meta.env.MODE === "development" ? "http://localhost:8002/" : "/",
+  baseURL: import.meta.env.MODE === "development" ? "http://localhost:3000/" : "/",
   timeout: 30 * 1000,
 });
 interface RequestOptions {
