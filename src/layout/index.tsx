@@ -26,11 +26,6 @@ const LayoutWrapper = () => {
   );
   const location = useLocation();
   useEffect(() => {
-    if (location.pathname === "/") {
-      navigate("/home");
-      setCurrentModule("home");
-      return;
-    }
     const paths = location.pathname.split("/");
     // /project/front-end =>  ['', 'project', 'front-end']
     if (paths[1]) {
@@ -45,6 +40,10 @@ const LayoutWrapper = () => {
     }
   }, [location.pathname]);
   useEffect(() => {
+    if (location.pathname === "/") {
+      navigate("/login");
+      return;
+    }
     getUserInfo();
   }, []);
   const getSelectKey = (pathname, menusMap) => {

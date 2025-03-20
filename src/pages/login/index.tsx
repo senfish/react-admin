@@ -50,6 +50,12 @@ const Login = (props) => {
           登录
         </Button>
       </div>
+      <div className="footer">
+        备案号：
+        <a href="https://beian.miit.gov.cn/" target="_blank">
+          赣ICP备2025055748号-1
+        </a>
+      </div>
     </div>
   );
 };
